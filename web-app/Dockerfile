@@ -7,5 +7,5 @@ COPY . /app/
 RUN npm run build
 
 # Container
-FROM nginx:1.27.2-bookworm
+FROM nginx:1.27.5-bookworm
 COPY --from=builder /app/dist /usr/share/nginx/html
