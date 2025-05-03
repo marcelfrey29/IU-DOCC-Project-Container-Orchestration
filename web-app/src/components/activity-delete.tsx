@@ -1,4 +1,4 @@
-import { Activity, deleteActivity } from "@/service/Activity";
+import { type Activity, deleteActivity } from "@/service/Activity";
 import { Alert } from "@nextui-org/alert";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
@@ -92,13 +92,13 @@ export const ActivityDeleteControl = (params: {
                                     />
                                 </div>
                                 <div className="flex justify-end mb-4 mt-3">
-                                    <div className="grow-1"></div>
+                                    <div className="grow-1" />
                                     <Button
                                         color="default"
                                         onPress={onClose}
                                         className="mr-2"
                                     >
-                                        <BootstrapIcon name="x-circle-fill"></BootstrapIcon>
+                                        <BootstrapIcon name="x-circle-fill" />
                                         Cancel
                                     </Button>
                                     <Button
@@ -106,7 +106,7 @@ export const ActivityDeleteControl = (params: {
                                         isDisabled={secret.length < 1}
                                         onPress={deleteAct}
                                     >
-                                        <BootstrapIcon name="trash-fill"></BootstrapIcon>
+                                        <BootstrapIcon name="trash-fill" />
                                         Delete
                                     </Button>
                                 </div>

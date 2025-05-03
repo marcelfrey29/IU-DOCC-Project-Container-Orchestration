@@ -33,6 +33,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
         onChange,
     });
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies:
     useEffect(() => {
         setIsMounted(true);
     }, [isMounted]);
@@ -76,9 +77,9 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
                 })}
             >
                 {isSelected ? (
-                    <BootstrapIcon name="moon-fill"></BootstrapIcon>
+                    <BootstrapIcon name="moon-fill" />
                 ) : (
-                    <BootstrapIcon name="brightness-high-fill"></BootstrapIcon>
+                    <BootstrapIcon name="brightness-high-fill" />
                 )}
             </div>
         </Component>

@@ -4,6 +4,7 @@ import ReactDOMClient from "react-dom/client";
 import { afterEach, expect, test, vi } from "vitest";
 import { ActivityEditor } from "../../src/components/activity-editor"; // Ensure correct import
 
+// biome-ignore lint/suspicious/noExplicitAny:
 (globalThis as unknown as any).IS_REACT_ACT_ENVIRONMENT = true;
 
 afterEach(async () => {

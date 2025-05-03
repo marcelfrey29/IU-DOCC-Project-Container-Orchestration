@@ -39,7 +39,7 @@ export default function IndexPage() {
                                 <BootstrapIcon
                                     name="signpost-split-fill"
                                     className="text-4xl"
-                                ></BootstrapIcon>
+                                />
                                 <h2 className="pt-3 text-3xl font-bold tracking-tight text-sky-600">
                                     Inspire and be inspired with Travel Guides.
                                 </h2>
@@ -51,10 +51,10 @@ export default function IndexPage() {
                                 </p>
                                 <Button
                                     className="mt-3 bg-sky-600 text-gray-200"
-                                    onPress={() => routeTo(`/travel-guides`)}
+                                    onPress={() => routeTo("/travel-guides")}
                                 >
                                     View all Travel Guides
-                                    <BootstrapIcon name="chevron-right"></BootstrapIcon>
+                                    <BootstrapIcon name="chevron-right" />
                                 </Button>
                             </div>
                             <div className="col-span-2">
@@ -80,7 +80,7 @@ export default function IndexPage() {
                                 <BootstrapIcon
                                     name="activity"
                                     className="text-4xl"
-                                ></BootstrapIcon>
+                                />
                                 <h2 className="pt-3 text-3xl font-bold tracking-tight text-sky-600">
                                     Activities for everyone.
                                 </h2>
@@ -103,7 +103,7 @@ export default function IndexPage() {
                                 <BootstrapIcon
                                     name="moon-stars-fill"
                                     className="text-4xl"
-                                ></BootstrapIcon>
+                                />
                                 <h2 className="pt-3 text-3xl font-bold tracking-tight text-sky-600">
                                     Looks beautiful in dark and light.
                                 </h2>

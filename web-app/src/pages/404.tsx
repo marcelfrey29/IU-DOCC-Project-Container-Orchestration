@@ -12,7 +12,7 @@ export default function NotFoundPage() {
                 <BootstrapIcon
                     name="exclamation-circle-fill"
                     className="text-3xl text-danger"
-                ></BootstrapIcon>
+                />
                 <p className="font-mono text-4xl">
                     <b>404</b>
                 </p>
@@ -23,7 +23,7 @@ export default function NotFoundPage() {
                 <Button
                     className="mt-4"
                     color="primary"
-                    onPress={() => routeTo(`/`)}
+                    onPress={() => routeTo("/")}
                 >
                     <BootstrapIcon name="house-fill" /> Go to Homepage
                 </Button>

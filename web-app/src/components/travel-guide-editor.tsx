@@ -2,8 +2,8 @@ import { categoryConfig } from "@/config/category";
 import { Category } from "@/service/Shared";
 import {
     createTravelGuide,
-    CreateTravelGuideRequest,
-    TravelGuide,
+    type CreateTravelGuideRequest,
+    type TravelGuide,
     updateTravelGuide,
 } from "@/service/TravelGuide";
 import { Alert } from "@nextui-org/alert";
@@ -32,6 +32,7 @@ export const TravelGuideEditor = (params: {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [showUpdateError, setUpdateError] = useState(false);
 
+    // biome-ignore lint/suspicious/noExplicitAny:
     const onSubmit = async (e: any) => {
         e.preventDefault();
         const data = Object.fromEntries(
@@ -42,7 +43,7 @@ export const TravelGuideEditor = (params: {
             travelGuide: {
                 name: data.name,
                 description: data.description,
-                isPrivate: data.isPrivate === undefined ? false : true,
+                isPrivate: data.isPrivate !== undefined,
                 location: {
                     street: data.street,
                     zip: data.zip,
@@ -50,7 +51,7 @@ export const TravelGuideEditor = (params: {
                     state: data.state,
                     country: data.country,
                 },
-                category: parseInt(
+                category: Number.parseInt(
                     data.category ?? Category.MIX,
                 ) as unknown as Category,
             },
@@ -79,12 +80,12 @@ export const TravelGuideEditor = (params: {
             <Button className="mt-3" color="primary" onPress={onOpen}>
                 {params.type === "create" ? (
                     <>
-                        <BootstrapIcon name="plus-circle-fill"></BootstrapIcon>
+                        <BootstrapIcon name="plus-circle-fill" />
                         Create Travel Guide
                     </>
                 ) : (
                     <>
-                        <BootstrapIcon name="pencil-fill"></BootstrapIcon>
+                        <BootstrapIcon name="pencil-fill" />
                         Edit Travel Guide
                     </>
                 )}
@@ -244,7 +245,7 @@ export const TravelGuideEditor = (params: {
                                         </div>
                                     </div>
 
-                                    <Divider className="mt-2"></Divider>
+                                    <Divider className="mt-2" />
 
                                     <div>
                                         <div className="flex py-2 px-1 justify-between">
@@ -269,7 +270,7 @@ export const TravelGuideEditor = (params: {
                                             </Checkbox>
                                         </div>
 
-                                        <Divider className="mt-2"></Divider>
+                                        <Divider className="mt-2" />
 
                                         <div className="mt-4">
                                             {params.type === "create" ? (
@@ -316,13 +317,13 @@ export const TravelGuideEditor = (params: {
                                         />
                                     </div>
                                     <div className="flex justify-end mb-4">
-                                        <div className="grow-1"></div>
+                                        <div className="grow-1" />
                                         <Button
                                             color="danger"
                                             onPress={onClose}
                                             className="mr-2"
                                         >
-                                            <BootstrapIcon name="x-circle-fill"></BootstrapIcon>
+                                            <BootstrapIcon name="x-circle-fill" />
                                             Cancel
                                         </Button>
                                         {params.type === "create" ? (
@@ -331,7 +332,7 @@ export const TravelGuideEditor = (params: {
                                                     color="primary"
                                                     type="submit"
                                                 >
-                                                    <BootstrapIcon name="check-circle-fill"></BootstrapIcon>
+                                                    <BootstrapIcon name="check-circle-fill" />
                                                     Create Travel Guide
                                                 </Button>
                                             </>
@@ -341,7 +342,7 @@ export const TravelGuideEditor = (params: {
                                                     color="primary"
                                                     type="submit"
                                                 >
-                                                    <BootstrapIcon name="check-circle-fill"></BootstrapIcon>
+                                                    <BootstrapIcon name="check-circle-fill" />
                                                     Update Travel Guide
                                                 </Button>
                                             </>

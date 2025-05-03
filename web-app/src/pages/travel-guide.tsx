@@ -4,11 +4,11 @@ import { BootstrapIcon } from "@/components/icons";
 import { TravelGuideEditor } from "@/components/travel-guide-editor";
 import { categoryConfig } from "@/config/category";
 import DefaultLayout from "@/layouts/default";
-import { Activity, getActivities } from "@/service/Activity";
+import { type Activity, getActivities } from "@/service/Activity";
 import {
     deleteTravelGuideById,
     getTravelGuideById,
-    TravelGuide,
+    type TravelGuide,
 } from "@/service/TravelGuide";
 import { Alert } from "@nextui-org/alert";
 import { Button } from "@nextui-org/button";
@@ -33,7 +33,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function TravelGuideDetailPage() {
-    let { id } = useParams();
+    const { id } = useParams();
     const routeTo = useNavigate();
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [travelGuide, setTravelGuide] = useState(null as TravelGuide | null);
@@ -57,6 +57,7 @@ export default function TravelGuideDetailPage() {
             // FIXME: Add error handling
         }
     };
+    // biome-ignore lint/correctness/useExhaustiveDependencies:
     useEffect(() => {
         getTravelGuideData();
     }, []);
@@ -103,14 +104,14 @@ export default function TravelGuideDetailPage() {
                                 onSuccess={(activities) => {
                                     setActivities(activities);
                                 }}
-                            ></ActivityEditor>
+                            />
                             <ActivityDeleteControl
                                 tgId={id ?? "unknown"}
                                 actId={activity.id ?? "unknown"}
                                 onSuccess={(activities) => {
                                     setActivities(activities);
                                 }}
-                            ></ActivityDeleteControl>
+                            />
                         </div>
                     </TableCell>
                 </TableRow>
@@ -151,7 +152,7 @@ export default function TravelGuideDetailPage() {
                             <BootstrapIcon
                                 name="lock-fill"
                                 className="text-danger"
-                            ></BootstrapIcon>{" "}
+                            />{" "}
                             <b>401</b>
                         </p>
                         <p className="text-3xl">
@@ -191,7 +192,7 @@ export default function TravelGuideDetailPage() {
                                     <BootstrapIcon
                                         name="signpost-split"
                                         className="text-danger"
-                                    ></BootstrapIcon>{" "}
+                                    />{" "}
                                     <b>404</b>
                                 </p>
                                 <p className="text-3xl">
@@ -200,7 +201,7 @@ export default function TravelGuideDetailPage() {
 
                                 <Button
                                     className="mt-4"
-                                    onPress={() => routeTo(`/travel-guides`)}
+                                    onPress={() => routeTo("/travel-guides")}
                                     color="primary"
                                 >
                                     <BootstrapIcon name="list-task" /> View all
@@ -224,7 +225,7 @@ export default function TravelGuideDetailPage() {
                                         <BootstrapIcon
                                             name="geo-alt-fill"
                                             className="mr-1"
-                                        ></BootstrapIcon>
+                                        />
                                         {[
                                             travelGuide.location.street,
                                             `${travelGuide.location.zip} ${travelGuide.location.city}`.trim(),
@@ -241,7 +242,7 @@ export default function TravelGuideDetailPage() {
                                         <BootstrapIcon
                                             name="tag-fill"
                                             className="mr-1"
-                                        ></BootstrapIcon>
+                                        />
                                         {
                                             categoryConfig.find(
                                                 (c) =>
@@ -256,7 +257,7 @@ export default function TravelGuideDetailPage() {
                                                 <BootstrapIcon
                                                     name="eye-slash-fill"
                                                     className="mr-1"
-                                                ></BootstrapIcon>
+                                                />
                                                 <span>Private</span>
                                             </>
                                         ) : (
@@ -264,7 +265,7 @@ export default function TravelGuideDetailPage() {
                                                 <BootstrapIcon
                                                     name="eye-fill"
                                                     className="mr-1"
-                                                ></BootstrapIcon>
+                                                />
                                                 <span>Public</span>
                                             </>
                                         )}
@@ -279,7 +280,7 @@ export default function TravelGuideDetailPage() {
                                                 onSuccess={(d) => {
                                                     setTravelGuide(d);
                                                 }}
-                                            ></TravelGuideEditor>
+                                            />
                                             {/*TODO: Add Edit Travel Guide */}
                                         </div>
 
@@ -290,7 +291,7 @@ export default function TravelGuideDetailPage() {
                                                 color="danger"
                                                 onPress={onOpen}
                                             >
-                                                <BootstrapIcon name="trash-fill"></BootstrapIcon>
+                                                <BootstrapIcon name="trash-fill" />
                                                 Create Travel Guide
                                             </Button>
 
@@ -359,7 +360,7 @@ export default function TravelGuideDetailPage() {
                                                                     />
                                                                 </div>
                                                                 <div className="flex justify-end mb-4 mt-3">
-                                                                    <div className="grow-1"></div>
+                                                                    <div className="grow-1" />
                                                                     <Button
                                                                         color="default"
                                                                         onPress={
@@ -367,7 +368,7 @@ export default function TravelGuideDetailPage() {
                                                                         }
                                                                         className="mr-2"
                                                                     >
-                                                                        <BootstrapIcon name="x-circle-fill"></BootstrapIcon>
+                                                                        <BootstrapIcon name="x-circle-fill" />
                                                                         Cancel
                                                                     </Button>
                                                                     <Button
@@ -380,7 +381,7 @@ export default function TravelGuideDetailPage() {
                                                                             1
                                                                         }
                                                                     >
-                                                                        <BootstrapIcon name="trash-fill"></BootstrapIcon>
+                                                                        <BootstrapIcon name="trash-fill" />
                                                                         Delete
                                                                     </Button>
                                                                 </div>
@@ -434,7 +435,7 @@ export default function TravelGuideDetailPage() {
                                         onSuccess={(activities) => {
                                             setActivities(activities);
                                         }}
-                                    ></ActivityEditor>
+                                    />
                                 </section>
                             </section>
                         </>

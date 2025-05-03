@@ -22,6 +22,7 @@ export const Navbar = () => {
             <NavbarMenu>
                 <div className="mx-4 mt-2 flex flex-col gap-2">
                     {siteConfig.navItems.map((item, index) => (
+                        // biome-ignore lint/suspicious/noArrayIndexKey:
                         <NavbarMenuItem key={`${item}-${index}`}>
                             <Link color="foreground" href={item.href} size="lg">
                                 {item.label}
@@ -37,7 +38,7 @@ export const Navbar = () => {
 
                 <NavbarBrand className="gap-3 max-w-fit">
                     <p className="font-bold text-inherit text-4xl">
-                        <BootstrapIcon name="luggage-fill"></BootstrapIcon>
+                        <BootstrapIcon name="luggage-fill" />
                     </p>
                 </NavbarBrand>
 

@@ -13,13 +13,13 @@ export interface Location {
  * Categories to classify Travel Guides and Activities.
  */
 export enum Category {
-    MIX,
-    CULTURE,
-    ACTION,
-    RELAX,
-    ADVENTURE,
-    SPORTS,
-    ROADTRIP,
+    MIX = 0,
+    CULTURE = 1,
+    ACTION = 2,
+    RELAX = 3,
+    ADVENTURE = 4,
+    SPORTS = 5,
+    ROADTRIP = 6,
 }
 
 /**

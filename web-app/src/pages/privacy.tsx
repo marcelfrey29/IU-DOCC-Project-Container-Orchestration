@@ -5,7 +5,7 @@ export default function PrivacyPage() {
         <DefaultLayout>
             <section>
                 <h1 className="text-primary text-3xl mb-3">Privacy</h1>
-                <p></p>
+                <p />
             </section>
         </DefaultLayout>
     );

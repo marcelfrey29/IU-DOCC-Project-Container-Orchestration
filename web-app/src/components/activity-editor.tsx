@@ -1,8 +1,8 @@
 import { categoryConfig } from "@/config/category";
 import {
-    Activity,
+    type Activity,
     createActivity,
-    CreateActivityRequest,
+    type CreateActivityRequest,
     updateActivity,
 } from "@/service/Activity";
 import { Category } from "@/service/Shared";
@@ -32,6 +32,7 @@ export const ActivityEditor = (params: {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [showUpdateError, setUpdateError] = useState(false);
 
+    // biome-ignore lint/suspicious/noExplicitAny:
     const onSubmit = async (e: any) => {
         e.preventDefault();
         const data = Object.fromEntries(
@@ -49,11 +50,11 @@ export const ActivityEditor = (params: {
                     state: data.state,
                     country: data.country,
                 },
-                category: parseInt(
+                category: Number.parseInt(
                     data.category ?? Category.MIX,
                 ) as unknown as Category,
-                costsInCent: parseFloat(data.costs) * 100,
-                timeInMin: parseInt(data.time),
+                costsInCent: Number.parseFloat(data.costs) * 100,
+                timeInMin: Number.parseInt(data.time),
             },
         };
         const secret = data.password;
@@ -86,12 +87,12 @@ export const ActivityEditor = (params: {
             <Button className="mt-3" color="primary" onPress={onOpen}>
                 {params.type === "create" ? (
                     <>
-                        <BootstrapIcon name="plus-circle-fill"></BootstrapIcon>
+                        <BootstrapIcon name="plus-circle-fill" />
                         Add Activity
                     </>
                 ) : (
                     <>
-                        <BootstrapIcon name="pencil-fill"></BootstrapIcon>
+                        <BootstrapIcon name="pencil-fill" />
                     </>
                 )}
             </Button>
@@ -180,7 +181,11 @@ export const ActivityEditor = (params: {
                                                 max={1440 /* 24 hours */}
                                                 label="Expected Time (Minutes)"
                                                 placeholder="How long does this activity take?"
-                                                defaultValue={params?.data?.timeInMin.toString()}
+                                                defaultValue={
+                                                    params?.data?.timeInMin
+                                                        ? params?.data?.timeInMin.toString()
+                                                        : ""
+                                                }
                                                 isClearable
                                             />
 
@@ -284,7 +289,7 @@ export const ActivityEditor = (params: {
                                         </div>
                                     </div>
 
-                                    <Divider className="mt-2"></Divider>
+                                    <Divider className="mt-2" />
 
                                     <div>
                                         <div className="mt-4">
@@ -321,13 +326,13 @@ export const ActivityEditor = (params: {
                                         />
                                     </div>
                                     <div className="flex justify-end mb-4">
-                                        <div className="grow-1"></div>
+                                        <div className="grow-1" />
                                         <Button
                                             color="danger"
                                             onPress={onClose}
                                             className="mr-2"
                                         >
-                                            <BootstrapIcon name="x-circle-fill"></BootstrapIcon>
+                                            <BootstrapIcon name="x-circle-fill" />
                                             Cancel
                                         </Button>
                                         {params.type === "create" ? (
@@ -336,7 +341,7 @@ export const ActivityEditor = (params: {
                                                     color="primary"
                                                     type="submit"
                                                 >
-                                                    <BootstrapIcon name="check-circle-fill"></BootstrapIcon>
+                                                    <BootstrapIcon name="check-circle-fill" />
                                                     Create Activity
                                                 </Button>
                                             </>
@@ -346,7 +351,7 @@ export const ActivityEditor = (params: {
                                                     color="primary"
                                                     type="submit"
                                                 >
-                                                    <BootstrapIcon name="check-circle-fill"></BootstrapIcon>
+                                                    <BootstrapIcon name="check-circle-fill" />
                                                     Update Activity
                                                 </Button>
                                             </>

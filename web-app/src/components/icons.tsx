@@ -9,7 +9,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 export function BootstrapIcon(data: { name: string; className?: string }) {
     return (
         <>
-            <i className={"bi-" + data.name + " " + data.className}></i>
+            <i className={`bi-${data.name} ${data.className}`} />
         </>
     );
 }

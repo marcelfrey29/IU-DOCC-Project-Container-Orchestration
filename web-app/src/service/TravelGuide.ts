@@ -1,4 +1,4 @@
-import { Category, Location, UnauthorizedError } from "./Shared";
+import { type Category, type Location, UnauthorizedError } from "./Shared";
 
 export interface TravelGuide {
     id?: string;
@@ -40,7 +40,7 @@ export async function updateTravelGuide(
     data: UpdateTravelGuideRequest,
     secret: string,
 ): Promise<TravelGuide | null> {
-    const response = await fetch("http://localhost:9090/travel-guides/" + id, {
+    const response = await fetch(`http://localhost:9090/travel-guides/${id}`, {
         method: "PUT",
         headers: new Headers({
             "content-type": "application/json",
@@ -79,7 +79,7 @@ export async function getTravelGuideById(
     id: string,
     secret?: string,
 ): Promise<TravelGuide | null> {
-    const response = await fetch("http://localhost:9090/travel-guides/" + id, {
+    const response = await fetch(`http://localhost:9090/travel-guides/${id}`, {
         method: "GET",
         headers: new Headers({
             "content-type": "application/json",
@@ -103,7 +103,7 @@ export async function deleteTravelGuideById(
     id: string,
     secret: string,
 ): Promise<void> {
-    const response = await fetch("http://localhost:9090/travel-guides/" + id, {
+    const response = await fetch(`http://localhost:9090/travel-guides/${id}`, {
         method: "DELETE",
         headers: new Headers({
             "content-type": "application/json",

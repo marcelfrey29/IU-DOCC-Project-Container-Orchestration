@@ -2,7 +2,7 @@ import { BootstrapIcon } from "@/components/icons";
 import { TravelGuideEditor } from "@/components/travel-guide-editor";
 import { categoryConfig } from "@/config/category";
 import DefaultLayout from "@/layouts/default";
-import { getTravelGuides, TravelGuide } from "@/service/TravelGuide";
+import { getTravelGuides, type TravelGuide } from "@/service/TravelGuide";
 import { Button } from "@nextui-org/button";
 import {
     Table,
@@ -22,6 +22,7 @@ export default function TravelGuidesListPage() {
     const getTravelGuideData = async () => {
         setTravelGuides(await getTravelGuides());
     };
+    // biome-ignore lint/correctness/useExhaustiveDependencies:
     useEffect(() => {
         getTravelGuideData();
     }, []);
@@ -48,7 +49,7 @@ export default function TravelGuidesListPage() {
                     <TableCell>{tg.description}</TableCell>
                     <TableCell>
                         {tg.isPrivate === true ? (
-                            <span></span>
+                            <span />
                         ) : (
                             <span>
                                 {
@@ -84,7 +85,7 @@ export default function TravelGuidesListPage() {
                 <TravelGuideEditor
                     type="create"
                     onSuccess={getTravelGuideData}
-                ></TravelGuideEditor>
+                />
 
                 {/* <div className="mt-4">
                     <Alert
