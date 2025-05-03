@@ -107,9 +107,17 @@ export const ActivityEditor = (params: {
                         <>
                             <ModalHeader className="flex flex-col gap-1">
                                 {params.type === "create" ? (
-                                    <>Create a new Activity</>
+                                    <>
+                                        <span id="act-editor-title">
+                                            Create a new Activity
+                                        </span>
+                                    </>
                                 ) : (
-                                    <>Update an Activity</>
+                                    <>
+                                        <span id="act-editor-title">
+                                            Update an Activity
+                                        </span>
+                                    </>
                                 )}
                             </ModalHeader>
                             <ModalBody>
