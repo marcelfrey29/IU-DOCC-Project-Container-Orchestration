@@ -1,0 +1,61 @@
+name: Web App CI
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - web-app/**
+      - .github/workflows/web-app-ci.yml
+  workflow_dispatch: 
+
+jobs:
+  continuous-integration:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./web-app
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+      - name: Install Dependencies
+        run: npm ci
+      - name: Check Formatting
+        run: npm run format:verify
+      - name: TypeScript Typecheck
+        run: npm run typecheck
+      - name: Run Linter
+        run: npm run lint:verify
+      - name: Unit Tests
+        run: npm run test:unit
+      - name: Build
+        run: npm run build
+
+  sast-bearer-owasp-top-10:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Bearer OWASP Top 10
+        uses: bearer/bearer-action@v2
+        with:
+          path: 'web-app'
+          config-file: './bearer.yml'
+
+  sast-trivy-repo-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: 'fs'
+          scanners: 'vuln,secret,misconfig'
+          severity: 'CRITICAL,HIGH'
+          scan-ref: 'web-app'
+          exit-code: '1'
+          format: 'table'
