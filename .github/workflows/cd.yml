@@ -1,0 +1,245 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Continuous Delivery
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - backend/**
+      - web-app/**
+      - .github/workflows/**
+  workflow_dispatch: 
+
+env:
+  REGISTRY: ghcr.io
+  YQ_VERSION: v4.45.1
+  YQ_BINARY: yq_linux_amd64
+  BACKEND_IMAGE: marcelfrey29/iu-docc-project-container-orchestration-backend
+  WEB_APP_IMAGE: marcelfrey29/iu-docc-project-container-orchestration-web-app
+
+jobs:
+  build_backend:
+    uses: ./.github/workflows/backend-ci.yml
+
+  build_web_app:
+    uses: ./.github/workflows/web-app-ci.yml
+
+  # TODO: Add kube-lint
+
+  tag_source_code:
+    needs: [build_backend, build_web_app]
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Git
+        run: |
+          git config --global user.name 'marcelfrey29ghbot'
+          git config --global user.email 'marcelfrey29+ghbot@mailbox.org'
+          git config remote.origin.url >&-
+      - name: Tag Source Code
+        run: |
+          git tag CODE_${{github.RUN_ID}}
+          git push origin CODE_${{github.RUN_ID}}
+
+  package_backend:
+    needs: [tag_source_code]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Login to GitHub Container Registry (GHCR)
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract Metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}
+          tags: type=raw,value=${{github.RUN_ID}}
+      - name: Build and Push Docker Image
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: backend
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  package_web_app:
+    needs: [tag_source_code]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Login to GitHub Container Registry (GHCR)
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract Metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.WEB_APP_IMAGE }}
+          tags: type=raw,value=${{github.RUN_ID}}
+      - name: Build and Push Docker Image
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: web-app
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  sast_trivy_image_scan_backend:
+    needs: [package_backend]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      attestations: read
+    steps:
+      - name: Login to GitHub Container Registry (GHCR)
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run Trivy
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: 'image'
+          scanners: 'vuln,secret,misconfig'
+          severity: 'CRITICAL,HIGH'
+          image-ref: '${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{github.RUN_ID}}'
+          exit-code: '1'
+          format: 'table'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  sast_trivy_image_scan_web_app:
+    needs: [package_web_app]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      attestations: read
+    steps:
+      - name: Login to GitHub Container Registry (GHCR)
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run Trivy
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: 'image'
+          scanners: 'vuln,secret,misconfig'
+          severity: 'CRITICAL,HIGH'
+          image-ref: '${{ env.REGISTRY }}/${{ env.WEB_APP_IMAGE }}:${{github.RUN_ID}}'
+          exit-code: '1'
+          format: 'table'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  update_k8s_manifests:
+    needs: [sast_trivy_image_scan_backend,sast_trivy_image_scan_web_app]
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Git
+        run: |
+          git config --global user.name 'marcelfrey29ghbot'
+          git config --global user.email 'marcelfrey29+ghbot@mailbox.org'
+          git config remote.origin.url >&-
+      - name: Install yq
+        run: |
+          wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/${YQ_BINARY}.tar.gz -O - | tar xz && sudo mv ${YQ_BINARY} /usr/bin/yq
+          yq -v
+      # TODO: Enable once K8s manifests are defined
+      # - name: Update Backend Image in K8s Manifest
+      #   run: |
+      #     cd deploy/base
+      #     yq -i '.spec.containers[0].image = "ghcr.io/marcelfrey29/express-test:${{github.RUN_ID}}"' app.yaml
+      #     cd ../..
+      # - name: Update Backend Image in K8s Manifest
+      #   run: |
+      #     cd deploy/base
+      #     yq -i '.spec.containers[0].image = "ghcr.io/marcelfrey29/express-test:${{github.RUN_ID}}"' app.yaml
+      #     cd ../..
+      # - name: Push Changes back to GitHub
+      #   run: |
+      #     git add deploy/base/app.yaml
+      #     git commit -m "chore: update code to ${{github.RUN_ID}}"
+      #     git push origin main
+      - name: Tag Infrastructure as Code
+        run: |
+          git tag IAC_${{github.RUN_ID}}
+          git push origin IAC_${{github.RUN_ID}}
+
+  deploy_stage:
+    needs: [update_k8s_manifests]
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # We must use the IAC_ Tag from the previous step to make sure we deploy exactly that
+          # version of the code. Without ref, the commit without image update would be checked out.
+          # Using `main` could lead to deploying a future version of the code and not the one that
+          # was intended for this piepeline.
+          ref: IAC_${{github.RUN_ID}} 
+      - name: Setup Git
+        run: |
+          git config --global user.name 'marcelfrey29ghbot'
+          git config --global user.email 'marcelfrey29+ghbot@mailbox.org'
+          git config remote.origin.url >&-
+      - name: Promote to Stage by moving "argocd_stage" Tag
+        run: |
+          git tag -f argocd_stage
+          git push -f origin argocd_stage
+ 
+  # TODO: add manual approal
+  deploy_prod:
+    needs: [deploy_stage]
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: IAC_${{github.RUN_ID}}
+      - name: Setup Git
+        run: |
+          git config --global user.name 'marcelfrey29ghbot'
+          git config --global user.email 'marcelfrey29+ghbot@mailbox.org'
+          git config remote.origin.url >&-
+      - name: Promote to Prod by moving "argocd_prod" Tag
+        run: |
+          git tag -f argocd_prod
+          git push -f origin argocd_prod

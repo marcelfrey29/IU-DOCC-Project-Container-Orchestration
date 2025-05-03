@@ -10,6 +10,7 @@ on:
       - backend/**
       - .github/workflows/backend-ci.yml
   workflow_dispatch: 
+  workflow_call:
 
 jobs:
   continuous-integration:
