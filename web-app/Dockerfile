@@ -1,5 +1,5 @@
 # Builder Image
-FROM node:22.15.0-bookworm AS builder
+FROM node:23.11.0-bookworm AS builder
 WORKDIR /app
 COPY package.json package-lock.json /app/
 RUN npm ci
