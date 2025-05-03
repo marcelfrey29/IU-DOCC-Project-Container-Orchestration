@@ -25,6 +25,8 @@ func main() {
 	logger, _ := zap.NewProduction()
 	defer logger.Sync()
 
+	SetupDynamoDB()
+
 	app := fiber.New()
 	app.Use(requestid.New())
 	app.Use(fiberzap.New(fiberzap.Config{

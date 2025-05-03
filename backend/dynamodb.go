@@ -30,6 +30,51 @@ func getAwsConfig() aws.Config {
 
 var ddbClient = dynamodb.NewFromConfig(getAwsConfig())
 
+func SetupDynamoDB() {
+	logger.Info("Checking if DynamoDB table exists.", zap.String("tableName", tableName))
+	response, err := ddbClient.DescribeTable(context.TODO(), &dynamodb.DescribeTableInput{
+		TableName: aws.String(tableName),
+	})
+	if err != nil {
+		logger.Error("The DynamoDB Table doesn't exist, creating...", zap.String("error", err.Error()))
+		createResponse, createErr := ddbClient.CreateTable(context.TODO(), &dynamodb.CreateTableInput{
+			TableName: aws.String(tableName),
+			AttributeDefinitions: []types.AttributeDefinition{
+				{
+					AttributeName: aws.String("hashId"),
+					AttributeType: types.ScalarAttributeTypeS,
+				},
+				{
+					AttributeName: aws.String("rangeId"),
+					AttributeType: types.ScalarAttributeTypeS,
+				},
+			},
+			KeySchema: []types.KeySchemaElement{
+				{
+					AttributeName: aws.String("hashId"),
+					KeyType:       types.KeyTypeHash,
+				},
+				{
+					AttributeName: aws.String("rangeId"),
+					KeyType:       types.KeyTypeRange,
+				},
+			},
+			TableClass: types.TableClassStandard,
+			ProvisionedThroughput: &types.ProvisionedThroughput{
+				ReadCapacityUnits:  aws.Int64(5),
+				WriteCapacityUnits: aws.Int64(5),
+			},
+		})
+		if createErr != nil {
+			logger.Error("Error while creating DynamoDB table.", zap.String("error", createErr.Error()))
+			panic("Error while creating DynamoDB table.")
+		}
+		logger.Info("DynamoDB Table created, ready to go.", zap.String("tableName", *createResponse.TableDescription.TableName), zap.String("tableStatus", string(createResponse.TableDescription.TableStatus)))
+	} else {
+		logger.Info("DynamoDB Table exits, ready to go.", zap.String("tableName", *response.Table.TableName), zap.String("tableStatus", string(response.Table.TableStatus)))
+	}
+}
+
 // Get all Travel Guides from the Database.
 func GetTravelGuidesFromDDB() ([]TravelGuideItem, error) {
 	logger.Info("Getting for all Travel Guides from DynamoDB.")
