@@ -3,7 +3,7 @@ services:
     container_name: iu-project-cc-webapp
     build: "./web-app"
     ports:
-      - "8080:80"
+      - "8080:8080"
   
   backend:
     container_name: iu-project-cc-backend

@@ -8,6 +8,7 @@ RUN go build -o app
 
 # Container
 FROM debian:12.7-slim
+USER nobody
 WORKDIR /app
 COPY --from=builder /app/app .
 CMD [ "./app" ]
