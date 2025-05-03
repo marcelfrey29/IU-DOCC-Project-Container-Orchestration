@@ -1,5 +1,5 @@
 # Builder
-FROM golang:1.23.2-bookworm AS builder
+FROM golang:1.24.2-bookworm AS builder
 WORKDIR /app
 COPY go.mod go.sum /app/
 RUN go mod download
@@ -7,7 +7,7 @@ COPY *.go /app/
 RUN go build -o app
 
 # Container
-FROM debian:12.7-slim
+FROM debian:12.10-slim
 USER nobody
 WORKDIR /app
 COPY --from=builder /app/app .
