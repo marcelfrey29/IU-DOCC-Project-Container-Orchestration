@@ -1,11 +1,14 @@
-name: Web App CI (TypeScript/React)
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Backend CI (Golang)
 
 on:
   pull_request:
     branches: ["main"]
     paths:
-      - web-app/**
-      - .github/workflows/web-app-ci.yml
+      - backend/**
+      - .github/workflows/backend-ci.yml
   workflow_dispatch: 
 
 jobs:
@@ -13,26 +16,22 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./web-app
+        working-directory: ./backend
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Go
+        uses: actions/setup-go@v5
         with:
-          node-version: 20.x
-      - name: Install Dependencies
-        run: npm ci
+          go-version: 1.23.x
+      - name: Display Go version
+        run: go version
       - name: Check Formatting
-        run: npm run format:verify
-      - name: TypeScript Typecheck
-        run: npm run typecheck
-      - name: Run Linter
-        run: npm run lint:verify
-      - name: Unit Tests
-        run: npm run test:unit
+        run: gofmt -l . && test -z $(gofmt -l .)
       - name: Build
-        run: npm run build
+        run: go build -v ./...
+      - name: Unit Tests
+        run: go test -v ./...
 
   sast-bearer-owasp-top-10:
     runs-on: ubuntu-latest
@@ -42,7 +41,7 @@ jobs:
       - name: Bearer OWASP Top 10
         uses: bearer/bearer-action@v2
         with:
-          path: 'web-app'
+          path: 'backend'
           config-file: './bearer.yml'
 
   sast-trivy-repo-scan:
@@ -56,6 +55,6 @@ jobs:
           scan-type: 'fs'
           scanners: 'vuln,secret,misconfig'
           severity: 'CRITICAL,HIGH'
-          scan-ref: 'web-app'
+          scan-ref: 'backend'
           exit-code: '1'
           format: 'table'
