@@ -1,0 +1,3 @@
+rule:
+  # Allow structured logging
+  skip-rule: [go_lang_logger_leak]
