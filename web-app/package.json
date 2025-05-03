@@ -58,7 +58,7 @@
         "autoprefixer": "^10.4.20",
         "happy-dom": "^17.4.6",
         "postcss": "^8.4.49",
-        "typescript": "^5.7.2",
+        "typescript": "^5.8.3",
         "vite": "^6.0.5",
         "vite-tsconfig-paths": "^5.1.4",
         "vitest": "^3.1.2"
