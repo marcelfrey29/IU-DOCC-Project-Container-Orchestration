@@ -29,3 +29,4 @@ services:
       - "8000:8000"
     volumes:
       - "./.storage/dynamodb/data:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
