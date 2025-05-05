@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app
+  annotations:
+    ignore-check.kube-linter.io/no-read-only-root-fs: "Prevent nginx crash loop"
+spec:
+  selector:
+    matchLabels:
+      app: web-app
+  template:
+    metadata:
+      labels:
+        app: web-app
+    spec:
+      containers:
+        - name: web-app
+          image: ghcr.io/marcelfrey29/iu-docc-project-container-orchestration-web-app:14813315711
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "256m"
+            limits:
+              memory: "128Mi"
+              cpu: "512m"
+          ports:
+            - containerPort: 8080
+              name: web-app-port
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+            runAsUser: 1000
+      imagePullSecrets:
+        - name: ghcr-pull-secret
