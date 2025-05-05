@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: ghcr.io/marcelfrey29/iu-docc-project-container-orchestration-backend:14813315711
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "256m"
+            limits:
+              memory: "128Mi"
+              cpu: "512m"
+          ports:
+            - containerPort: 3000
+              name: backend-port
+          env:
+            - name: DYNAMODB_TABLE_TRAVEL_GUIDES
+              value: "TravelGuides"
+            - name: USE_DYNAMODB_LOCAL
+              value: "true"
+            - name: DYNAMODB_LOCAL_URL
+              value: "http://dynamodb:8003"
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: dynamodb-secret
+                  key: access-key
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: dynamodb-secret
+                  key: secret-key
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+      imagePullSecrets:
+        - name: ghcr-pull-secret
