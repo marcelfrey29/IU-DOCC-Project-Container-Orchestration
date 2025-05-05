@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: dynamodb
+  annotations:
+    ignore-check.kube-linter.io/no-read-only-root-fs: "Allow DynamoDB to write dat to prevent crash"
+    ignore-check.kube-linter.io/run-as-non-root: "Allow DynamoDB to run as root"
+spec:
+  selector:
+    matchLabels:
+      app: dynamodb
+  serviceName: dynamodb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dynamodb
+    spec:
+      containers:
+        - name: dynamodb
+          image: amazon/dynamodb-local:2.6.1
+          workingDir: /home/dynamodblocal
+          ports:
+            - containerPort: 8000
+              name: dynamodb-port
+          volumeMounts:
+            - name: ddb-storage
+              mountPath: /home/dynamodblocal/data
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "512m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1024m"
+          # TODO: Revisit later (Kube-Linter)
+          # securityContext:
+          #   allowPrivilegeEscalation: false
+          #   readOnlyRootFilesystem: false
+          #   runAsNonRoot: true
+          #   runAsUser: 1000
+  volumeClaimTemplates:
+    - metadata:
+        name: ddb-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
