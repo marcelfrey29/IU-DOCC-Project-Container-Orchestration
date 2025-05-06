@@ -5,15 +5,16 @@ metadata:
   labels:
     name: backend
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
     - host: travel-guides.localhost
       http:
         paths:
-          - pathType: Prefix
-            path: "/api"
+          - pathType: ImplementationSpecific
+            path: /api(/|$)(.*)
             backend:
               service:
                 name: backend
