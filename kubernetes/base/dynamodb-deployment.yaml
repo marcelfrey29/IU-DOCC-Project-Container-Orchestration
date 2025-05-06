@@ -33,12 +33,11 @@ spec:
             limits:
               memory: "1024Mi"
               cpu: "1024m"
-          # TODO: Revisit later (Kube-Linter)
-          # securityContext:
-          #   allowPrivilegeEscalation: false
-          #   readOnlyRootFilesystem: false
-          #   runAsNonRoot: true
-          #   runAsUser: 1000
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
   volumeClaimTemplates:
     - metadata:
         name: ddb-storage

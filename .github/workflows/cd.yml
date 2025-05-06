@@ -26,10 +26,11 @@ jobs:
   build_web_app:
     uses: ./.github/workflows/web-app-ci.yml
 
-  # TODO: Add kube-lint
+  k8s_checks:
+    uses: ./.github/workflows/k8s-ci.yml
 
   tag_source_code:
-    needs: [build_backend, build_web_app]
+    needs: [build_backend, build_web_app, k8s_checks]
     permissions:
       contents: write
     runs-on: ubuntu-latest
