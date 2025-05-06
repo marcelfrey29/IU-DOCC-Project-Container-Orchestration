@@ -28,7 +28,7 @@ export async function createActivity(
     secret: string,
 ): Promise<Activity[]> {
     const response = await fetch(
-        `http://localhost:9090/travel-guides/${travelGuideId}/activities`,
+        `/api/travel-guides/${travelGuideId}/activities`,
         {
             method: "POST",
             headers: new Headers({
@@ -52,7 +52,7 @@ export async function updateActivity(
     secret: string,
 ): Promise<Activity[]> {
     const response = await fetch(
-        `http://localhost:9090/travel-guides/${travelGuideId}/activities/${activityId}`,
+        `/api/travel-guides/${travelGuideId}/activities/${activityId}`,
         {
             method: "PUT",
             headers: new Headers({
@@ -80,7 +80,7 @@ export async function getActivities(
     secret?: string,
 ): Promise<Activity[]> {
     const response = await fetch(
-        `http://localhost:9090/travel-guides/${travelGuideId}/activities`,
+        `/api/travel-guides/${travelGuideId}/activities`,
         {
             method: "GET",
             headers: new Headers({
@@ -102,7 +102,7 @@ export async function deleteActivity(
     secret: string,
 ): Promise<Activity[]> {
     const response = await fetch(
-        `http://localhost:9090/travel-guides/${travelGuideId}/activities/${activityId}`,
+        `/api/travel-guides/${travelGuideId}/activities/${activityId}`,
         {
             method: "DELETE",
             headers: new Headers({

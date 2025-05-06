@@ -21,7 +21,7 @@ export interface UpdateTravelGuideRequest {
 export async function createTravelGuide(
     data: CreateTravelGuideRequest,
 ): Promise<TravelGuide> {
-    const response = await fetch("http://localhost:9090/travel-guides", {
+    const response = await fetch("/api/travel-guides", {
         method: "POST",
         headers: new Headers({
             "content-type": "application/json",
@@ -40,7 +40,7 @@ export async function updateTravelGuide(
     data: UpdateTravelGuideRequest,
     secret: string,
 ): Promise<TravelGuide | null> {
-    const response = await fetch(`http://localhost:9090/travel-guides/${id}`, {
+    const response = await fetch(`/api/travel-guides/${id}`, {
         method: "PUT",
         headers: new Headers({
             "content-type": "application/json",
@@ -62,7 +62,7 @@ export async function updateTravelGuide(
 }
 
 export async function getTravelGuides(): Promise<TravelGuide[]> {
-    const response = await fetch("http://localhost:9090/travel-guides", {
+    const response = await fetch("/api/travel-guides", {
         method: "GET",
         headers: new Headers({
             "content-type": "application/json",
@@ -79,7 +79,7 @@ export async function getTravelGuideById(
     id: string,
     secret?: string,
 ): Promise<TravelGuide | null> {
-    const response = await fetch(`http://localhost:9090/travel-guides/${id}`, {
+    const response = await fetch(`/api/travel-guides/${id}`, {
         method: "GET",
         headers: new Headers({
             "content-type": "application/json",
@@ -103,7 +103,7 @@ export async function deleteTravelGuideById(
     id: string,
     secret: string,
 ): Promise<void> {
-    const response = await fetch(`http://localhost:9090/travel-guides/${id}`, {
+    const response = await fetch(`/api/travel-guides/${id}`, {
         method: "DELETE",
         headers: new Headers({
             "content-type": "application/json",
