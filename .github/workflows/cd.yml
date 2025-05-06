@@ -182,22 +182,22 @@ jobs:
         run: |
           wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/${YQ_BINARY}.tar.gz -O - | tar xz && sudo mv ${YQ_BINARY} /usr/bin/yq
           yq -v
-      # TODO: Enable once K8s manifests are defined
-      # - name: Update Backend Image in K8s Manifest
-      #   run: |
-      #     cd deploy/base
-      #     yq -i '.spec.containers[0].image = "ghcr.io/marcelfrey29/express-test:${{github.RUN_ID}}"' app.yaml
-      #     cd ../..
-      # - name: Update Backend Image in K8s Manifest
-      #   run: |
-      #     cd deploy/base
-      #     yq -i '.spec.containers[0].image = "ghcr.io/marcelfrey29/express-test:${{github.RUN_ID}}"' app.yaml
-      #     cd ../..
-      # - name: Push Changes back to GitHub
-      #   run: |
-      #     git add deploy/base/app.yaml
-      #     git commit -m "chore: update code to ${{github.RUN_ID}}"
-      #     git push origin main
+      - name: Update Backend Image in K8s Manifest
+        run: |
+          cd kubernetes/base
+          yq -i '.spec.template.containers[0].image = "ghcr.io/marcelfrey29/iu-docc-project-container-orchestration-backend:${{github.RUN_ID}}"' backend-deployment.yaml
+          cd ../..
+      - name: Update Web App Image in K8s Manifest
+        run: |
+          cd kubernetes/base
+          yq -i '.spec.template.containers[0].image = "ghcr.io/marcelfrey29/iu-docc-project-container-orchestration-web-app:${{github.RUN_ID}}"' web-app-deployment.yaml
+          cd ../..
+      - name: Push Changes back to GitHub
+        run: |
+          git add backend-deployment.yaml
+          git add web-app-deployment.yaml
+          git commit -m "chore: update container images in K8s manifests to version ${{github.RUN_ID}}."
+          git push origin main
       - name: Tag Infrastructure as Code
         run: |
           git tag IAC_${{github.RUN_ID}}
