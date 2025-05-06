@@ -1,0 +1,7 @@
+namePrefix: prod-
+commonLabels:
+  environment: prod
+namespace: prod-travel-guides
+
+bases:
+  - ../../base

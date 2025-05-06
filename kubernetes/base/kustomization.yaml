@@ -1,0 +1,11 @@
+resources:
+  - backend-development.yaml
+  - backend-hpa.yaml
+  - backend-ingress.yaml
+  - backend-service.yaml
+  - dynamodb-deployment.yaml
+  - dynamodb-service.yaml
+  - web-app-deployment.yaml
+  - web-app-hpa.yaml
+  - web-app-ingress.yaml
+  - web-app-service.yaml

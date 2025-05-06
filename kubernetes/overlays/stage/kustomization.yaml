@@ -1,0 +1,21 @@
+namePrefix: stage-
+commonLabels:
+  environment: stage
+namespace: stage-travel-guides
+
+bases:
+  - ../../base
+
+patches:
+  - target:
+      group: networking.k8s.io
+      version: v1
+      kind: Ingress
+      name: backend
+    path: backend-ingress-patch.yaml
+  - target:
+      group: networking.k8s.io
+      version: v1
+      kind: Ingress
+      name: web-app
+    path: web-app-ingress-patch.yaml
