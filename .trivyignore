@@ -1,2 +1,6 @@
 # Accept for Prototyping / University Project
 AVD-KSV-0014
+CVE-2023-31484
+
+# Ignore Debian Won't Fix
+CVE-2023-45853
