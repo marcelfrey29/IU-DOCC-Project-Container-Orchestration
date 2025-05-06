@@ -18,6 +18,16 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+      - name: Check Kustomize Generation for Stage
+        run: kubectl kustomize kubernetes/overlays/stage 
+      - name: Check Kustomize Generation for Prod
+        run: kubectl kustomize kubernetes/overlays/prod
+
+  kube-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
       - name: Run Kube-Lint
         uses: stackrox/kube-linter-action@v1
         with:

@@ -1,5 +1,5 @@
 resources:
-  - backend-development.yaml
+  - backend-deployment.yaml
   - backend-hpa.yaml
   - backend-ingress.yaml
   - backend-service.yaml
