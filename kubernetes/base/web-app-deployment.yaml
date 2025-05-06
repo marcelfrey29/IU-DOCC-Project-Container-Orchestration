@@ -34,4 +34,4 @@ spec:
       imagePullSecrets:
         - name: ghcr-pull-secret
     containers:
-      - image: ghcr.io/marcelfrey29/iu-docc-project-container-orchestration-web-app:14866397355
+      - image: ghcr.io/marcelfrey29/iu-docc-project-container-orchestration-web-app:14867894145
