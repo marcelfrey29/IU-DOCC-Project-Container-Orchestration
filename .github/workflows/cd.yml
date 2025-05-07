@@ -185,12 +185,12 @@ jobs:
       - name: Update Backend Image in K8s Manifest
         run: |
           cd kubernetes/base
-          yq -i '.spec.template.containers[0].image = "ghcr.io/marcelfrey29/iu-docc-project-container-orchestration-backend:${{github.RUN_ID}}"' backend-deployment.yaml
+          yq -i '.spec.template.spec.containers[0].image = "ghcr.io/marcelfrey29/iu-docc-project-container-orchestration-backend:${{github.RUN_ID}}"' backend-deployment.yaml
           cd ../..
       - name: Update Web App Image in K8s Manifest
         run: |
           cd kubernetes/base
-          yq -i '.spec.template.containers[0].image = "ghcr.io/marcelfrey29/iu-docc-project-container-orchestration-web-app:${{github.RUN_ID}}"' web-app-deployment.yaml
+          yq -i '.spec.template.spec.containers[0].image = "ghcr.io/marcelfrey29/iu-docc-project-container-orchestration-web-app:${{github.RUN_ID}}"' web-app-deployment.yaml
           cd ../..
       - name: Push Changes back to GitHub
         run: |
