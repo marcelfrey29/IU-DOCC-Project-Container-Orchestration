@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: web-app
-          image: ghcr.io/marcelfrey29/iu-docc-project-container-orchestration-web-app:14813315711
+          image: ghcr.io/marcelfrey29/iu-docc-project-container-orchestration-web-app:14888913761
           resources:
             requests:
               memory: "64Mi"
