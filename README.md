@@ -15,3 +15,11 @@
 - Move the environment tags forward
 
 ![CI/CD with GitHub Actions](docs/assets/ci-overview-github-actions.svg)
+
+**Continuous Deployment with Argo CD**:
+
+- Argo CD observes the environment tag and maintains the desired state in the K8s cluster
+- Each environment has its own namespace
+- The images defined in the target-revision are pulled from GitHub Container Registry (GHCR)
+
+![CD with Argo CD](docs/assets/cd-overview-argocd.svg)
