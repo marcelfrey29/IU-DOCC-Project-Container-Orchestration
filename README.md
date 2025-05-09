@@ -6,6 +6,14 @@
 
 ## CI/CD Architecture
 
+**Pull-based Continuous Deployment**:
+
+- Everything is pulled and observed from inside the cluster
+- Increased security because no external access to the cluster is required
+    - With a push-based approach, the cluster must be reachable from the outside and the CI/CD system needs high-privilege credentials
+
+![Pull-based CD](docs/assets/pull-based-cd.svg)
+
 **Continuous Integration and Delivery with GitHub Actions**:
 
 - Verify backend, frontend, and K8s definitions
