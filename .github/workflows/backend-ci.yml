@@ -59,3 +59,4 @@ jobs:
           scan-ref: 'backend'
           exit-code: '1'
           format: 'table'
+          trivyignores: '.trivyignore'

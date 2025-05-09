@@ -47,3 +47,4 @@ jobs:
           scan-ref: 'kubernetes'
           exit-code: '1'
           format: 'table'
+          trivyignores: '.trivyignore'
