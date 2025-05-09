@@ -23,3 +23,9 @@
 - The images defined in the target-revision are pulled from GitHub Container Registry (GHCR)
 
 ![CD with Argo CD](docs/assets/cd-overview-argocd.svg)
+
+## Web-App Architecture
+
+**Application components and Kubernetes resources**:
+
+![Application Architecture in Kubernetes](docs/assets/k8s-application-architecture.svg)
