@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/marcelfrey29/iu-docc-project-container-orchestration-backend:14888913761
+          image: ghcr.io/marcelfrey29/iu-docc-project-container-orchestration-backend:14930052484
           resources:
             requests:
               memory: "64Mi"
