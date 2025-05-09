@@ -32,6 +32,14 @@
 
 ![CD with Argo CD](docs/assets/cd-overview-argocd.svg)
 
+**Multi-Environment support with Kustomize**:
+
+- Prevent duplicated manifests
+- Replace certain values
+- Add a prefix to any resource
+
+![Kustomize Patch](docs/assets/kustomize-patch.svg)
+
 ## Web-App Architecture
 
 **Application components and Kubernetes resources**:

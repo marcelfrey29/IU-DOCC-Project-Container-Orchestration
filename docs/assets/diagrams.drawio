@@ -1,4 +1,4 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.2.15 Chrome/134.0.6998.205 Electron/35.2.1 Safari/537.36" version="26.2.15" pages="4">
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.2.15 Chrome/134.0.6998.205 Electron/35.2.1 Safari/537.36" version="26.2.15" pages="5">
   <diagram id="3ifVlS0FLqBDNOg5GtUW" name="Pull-based CD">
     <mxGraphModel dx="815" dy="458" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -563,6 +563,77 @@
               <mxPoint x="100" y="460" />
               <mxPoint x="100" y="385" />
             </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="r819ExKNg9tcfjEyv0ho" name="Kustomize">
+    <mxGraphModel dx="1358" dy="764" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-1" value="&lt;pre&gt;apiVersion: networking.k8s.io/v1&lt;br&gt;kind: Ingress&lt;br&gt;metadata:&lt;br&gt;&amp;nbsp; name: web-app&lt;br&gt;spec:&lt;br&gt;&amp;nbsp; ingressClassName: nginx&lt;br&gt;&amp;nbsp; rules:&lt;br&gt;&amp;nbsp; &amp;nbsp; - &lt;b&gt;host: travel-guides.localhost&lt;/b&gt;&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; http:&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; paths:&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; - pathType: Prefix&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; path: &quot;/&quot;&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; backend:&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; service:&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: web-app&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; port:&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; number: 8001&lt;/pre&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="40" y="120" width="280" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-2" value="&lt;pre&gt;- op: replace&lt;br&gt;&amp;nbsp; path: &lt;b&gt;/spec/rules/0/host&lt;/b&gt;&lt;br&gt;&amp;nbsp; value: &lt;b&gt;travel-guides.&lt;font style=&quot;color: rgb(0, 127, 255);&quot;&gt;stage&lt;/font&gt;.localhost&lt;/b&gt;&lt;/pre&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="360" y="160" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-3" value="&lt;div&gt;&lt;i&gt;&lt;br&gt;&lt;/i&gt;&lt;/div&gt;&lt;i&gt;&lt;div&gt;&lt;i&gt;&lt;br&gt;&lt;/i&gt;&lt;/div&gt;No Patch&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="320" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-5" value="Stage Patch" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="120" width="280" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-6" value="&lt;pre&gt;apiVersion: networking.k8s.io/v1&lt;br&gt;kind: Ingress&lt;br&gt;spec:&lt;br&gt;&amp;nbsp; rules:&lt;br&gt;&amp;nbsp; &amp;nbsp; - &lt;b&gt;host: travel-guides.localhost&lt;/b&gt;&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; http:&lt;br&gt;&lt;/pre&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="680" y="280" width="320" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-7" value="&lt;pre&gt;apiVersion: networking.k8s.io/v1&lt;br&gt;kind: Ingress&lt;br&gt;spec:&lt;br&gt;&amp;nbsp; rules:&lt;br&gt;&amp;nbsp; &amp;nbsp; - &lt;b&gt;host: travel-guides.&lt;font style=&quot;color: rgb(0, 127, 255);&quot;&gt;stage&lt;/font&gt;.localhost&lt;/b&gt;&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; http:&lt;br&gt;&lt;/pre&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="680" y="120" width="320" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-10" value="Prod Patch" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="280" width="280" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-11" value="&lt;b&gt;Source&lt;/b&gt;: Manifest defined in the Repo" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="280" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-12" value="&lt;b&gt;Patch-Source&lt;/b&gt;: Overrides defined in the Repo" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="360" y="80" width="280" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-13" value="&lt;b&gt;Result&lt;/b&gt;: Generated from source and patch by Kustomize&lt;div&gt;Argo CD includes Kustomize&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="680" y="80" width="320" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-14" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#007FFF;strokeWidth=2;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="640" y="214" as="sourcePoint" />
+            <mxPoint x="680" y="214" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-15" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#007FFF;strokeWidth=2;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="tUxgePrSg7e_Zv05lM8C-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="246" as="sourcePoint" />
+            <mxPoint x="359" y="215" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-16" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#FFB570;strokeWidth=2;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="tUxgePrSg7e_Zv05lM8C-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="302" y="247" as="sourcePoint" />
+            <mxPoint x="360" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-17" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#FFB570;strokeWidth=2;endFill=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="640" y="359" as="sourcePoint" />
+            <mxPoint x="680" y="359" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-18" value="" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#007FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.gear;" vertex="1" parent="1">
+          <mxGeometry x="610" y="170" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="tUxgePrSg7e_Zv05lM8C-19" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#FFB570;" edge="1" parent="1" target="tUxgePrSg7e_Zv05lM8C-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="360" as="sourcePoint" />
+            <mxPoint x="410" y="310" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
