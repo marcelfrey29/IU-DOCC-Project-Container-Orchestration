@@ -41,7 +41,7 @@
         "@react-aria/visually-hidden": "^3.8.22",
         "bootstrap-icons": "^1.11.3",
         "clsx": "^2.1.1",
-        "framer-motion": "^12.9.4",
+        "framer-motion": "^12.10.5",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
         "react-router-dom": "^7.5.3",
