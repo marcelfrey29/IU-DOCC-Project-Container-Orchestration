@@ -1,5 +1,22 @@
 # IU-DOCC-Project-Container-Orchestration
 
+**Continuous Deployment of a Three-Tier Web-Application to Kubernetes using GitHub Actions, Argo CD, and Kustomize**
+
+[![Backend CI (Golang)](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/backend-ci.yml)
+[![Web App CI (TypeScript/React)](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/web-app-ci.yml/badge.svg)](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/web-app-ci.yml)
+[![Kubernetes CI](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/k8s-ci.yml/badge.svg)](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/k8s-ci.yml)
+
+[![Continuous Delivery](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/cd.yml/badge.svg)](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/cd.yml)
+
+- [x] **Continuous Integration and Delivery (CI/CD)** with **GitHub Actions** using **GitHub Container Registry (GHCR)**
+- [x] **Continuous Deployment (CD)** to **Kubernetes** with **Argo CD**
+- [x] **Multi-Environment Support** (`stage`-> `prod`) via **Kustomize**
+- [x] **Security** is ensured by **Trivy** and **Bearer** which are part of the Pipeline and acts as quality gate
+- [x] Polyglot three-tier Web Application running in **Kubernetes**
+    - [x] **Horizontal Pod Autoscaling** with **HPA** für the Frontend (TypeScript/React) and Backend (Golang)
+    - [x] **DynamoDB Local** database deployment as `StatefulSet`
+    - [x] Access through an **nginx Ingress Controller**
+
 ## Documentation
 
 - [Project Preparation](docs/01-Preparation.md)
@@ -45,3 +62,29 @@
 **Application components and Kubernetes resources**:
 
 ![Application Architecture in Kubernetes](docs/assets/k8s-application-architecture.svg)
+
+## Results
+
+**GitHub Actions: Continuous Delivery Workflow**
+
+![GitHub Actions Continuous Delivery Workflow](docs/assets/github-actions-cicd.png)
+
+**GitHub Actions: Backend Continuous Integration Steps**
+
+![GitHub Actions Backend Steps](docs/assets/github-actions-cicd-backend-ci.png)
+
+**Argo CD: Overview**:
+
+![Argo CD Overview](docs/assets/argocd-overview.png)
+
+**Argo CD: Travel Guides `prod` Application**:
+
+![Argo CD](docs/assets/argocd-prod.png)
+
+**Argo CD and the running `stage` and `prod` applications**:
+
+![Argo CD and Applications](docs/assets/argocd-with-apps.png)
+
+**Kubernetes Namespaces and Pods in `stage` and `prod` Namespace**:
+
+![K8s Namespaces and Pods](docs/assets/k8s-namespaces-and-pods.png)
