@@ -32,4 +32,4 @@ spec:
             runAsNonRoot: true
             runAsUser: 1000
       imagePullSecrets:
-        - name: ghcr-pull-secret
+        - name: ghcr-pull-secret # <-- Name of K8s Image Pull Secret

@@ -25,6 +25,7 @@
 - [Argo CD Deployment Configuration](docs/04-Argo-CD-Configuration.runme.md)
     - Declarative Configuration
     - Private GitHub Repositroy access
+- [Private Registry Config](docs/05-Private-Registry-Config.runme.md)
 
 ## Prerequisites
 
