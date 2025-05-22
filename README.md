@@ -5,11 +5,10 @@
 [![Backend CI (Golang)](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/backend-ci.yml)
 [![Web App CI (TypeScript/React)](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/web-app-ci.yml/badge.svg)](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/web-app-ci.yml)
 [![Kubernetes CI](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/k8s-ci.yml/badge.svg)](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/k8s-ci.yml)
-
 [![Continuous Delivery](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/cd.yml/badge.svg)](https://github.com/marcelfrey29/IU-DOCC-Project-Container-Orchestration/actions/workflows/cd.yml)
 
 - [x] **Continuous Integration and Delivery (CI/CD)** with **GitHub Actions** using **GitHub Container Registry (GHCR)**
-- [x] **Continuous Deployment (CD)** to **Kubernetes** with **Argo CD**
+- [x] **Continuous Deployment (CD)** to **Kubernetes** with **Argo CD** using the **GitOps** approach
 - [x] **Multi-Environment Support** (`stage`-> `prod`) via **Kustomize**
 - [x] **Security** is ensured by **Trivy** and **Bearer** which are part of the Pipeline and acts as quality gate
 - [x] Polyglot three-tier Web Application running in **Kubernetes**
@@ -19,14 +18,14 @@
 
 ## Documentation
 
-- [Project Preparation](docs/01-Preparation.md)
-- [Argo CD Installation](docs/02-Setup-Argo-CD.runme.md)
-- [Access to Argo CD](docs/03-Access-Argo-CD.runme.md)
-- [Argo CD Deployment Configuration](docs/04-Argo-CD-Configuration.runme.md)
-    - Declarative Configuration
-    - Private GitHub Repositroy access
-- [Private Registry Config](docs/05-Private-Registry-Config.runme.md)
-- [Application Secret Configuration](docs/06-Application-Secret-Config.runme.md) 
+- [Project Preparation](docs/01-Preparation.md): Project Plan, Requirements, and Project Management
+- [Argo CD Installation](docs/02-Setup-Argo-CD.runme.md): Setup and initial configuration of Argo CD
+- [Access to Argo CD](docs/03-Access-Argo-CD.runme.md): How to access Argo CD
+- [Argo CD Deployment Configuration](docs/04-Argo-CD-Configuration.runme.md): Declarative Argo CD configuration and access to private repositories
+- [Private Registry Config](docs/05-Private-Registry-Config.runme.md): Configuration for private container registries (e.g. GHCR)
+- [Application Secret Configuration](docs/06-Application-Secret-Config.runme.md): Configure application secrets 
+- [Learnings](docs/07-Learnings.md): Learnings and challenges 
+- [Improvements](docs/08-Improvements.md): Ideas, improvements, and possible next steps
 
 ## Prerequisites
 
@@ -42,6 +41,11 @@
 > 
 > Once Argo CD is installed in the Cluster, [this readme file](docs/90-Argo-CD-nginx-Ingress-Controller.runme.md) describe how to deploy the nginx Ingress Controller via Argo CD.
 
+> [!IMPORTANT]
+> The nginx Ingress Controller provides a `IngressClass` which is named `nginx`.
+> **Kubernetes `Ingress` Resources must therefore use the `ingressClassName: nginx`.**
+>
+> This configuration is done for all existing resources, but must be considered for new resources or changes.
 
 ## CI/CD Architecture
 
