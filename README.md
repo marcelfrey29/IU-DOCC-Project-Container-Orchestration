@@ -26,6 +26,7 @@
     - Declarative Configuration
     - Private GitHub Repositroy access
 - [Private Registry Config](docs/05-Private-Registry-Config.runme.md)
+- [Application Secret Configuration](docs/06-Application-Secret-Config.runme.md) 
 
 ## Prerequisites
 
