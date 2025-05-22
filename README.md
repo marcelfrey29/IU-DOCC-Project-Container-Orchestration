@@ -22,6 +22,9 @@
 - [Project Preparation](docs/01-Preparation.md)
 - [Argo CD Installation](docs/02-Setup-Argo-CD.runme.md)
 - [Access to Argo CD](docs/03-Access-Argo-CD.runme.md)
+- [Argo CD Deployment Configuration](docs/04-Argo-CD-Configuration.runme.md)
+    - Declarative Configuration
+    - Private GitHub Repositroy access
 
 ## Prerequisites
 
@@ -35,7 +38,7 @@
 > [!TIP]
 > The nginx Ingress Controller is available as Helm-Chart which can be managed with Argo CD too.
 > 
-> Once Argo CD is installed in the Cluster, [this readme file](docs/05-Argo-CD-nginx-Ingress-Controller.runme.md) describe how to deploy the nginx Ingress Controller via Argo CD.
+> Once Argo CD is installed in the Cluster, [this readme file](docs/90-Argo-CD-nginx-Ingress-Controller.runme.md) describe how to deploy the nginx Ingress Controller via Argo CD.
 
 
 ## CI/CD Architecture
