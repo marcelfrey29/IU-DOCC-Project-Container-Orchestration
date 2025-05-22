@@ -23,6 +23,21 @@
 - [Argo CD Installation](docs/02-Setup-Argo-CD.runme.md)
 - [Access to Argo CD](docs/03-Access-Argo-CD.runme.md)
 
+## Prerequisites
+
+- Kubernetes Cluster
+- nginx Ingress Controller ([Docs](https://kubernetes.github.io/ingress-nginx/deploy/)) must be deployed in the K8s cluster
+- Argo CD CLI installed ([Docs](https://argo-cd.readthedocs.io/en/stable/getting_started/#2-download-argo-cd-cli))
+
+> [!CAUTION]
+> The application uses K8s `Ingress` resources and won't work if no [Ingress Controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) is installed. 
+
+> [!TIP]
+> The nginx Ingress Controller is available as Helm-Chart which can be managed with Argo CD too.
+> 
+> Once Argo CD is installed in the Cluster, [this readme file](docs/05-Argo-CD-nginx-Ingress-Controller.runme.md) describe how to deploy the nginx Ingress Controller via Argo CD.
+
+
 ## CI/CD Architecture
 
 **Pull-based Continuous Deployment**:
