@@ -20,6 +20,8 @@
 ## Documentation
 
 - [Project Preparation](docs/01-Preparation.md)
+- [Argo CD Installation](docs/02-Setup-Argo-CD.runme.md)
+- [Access to Argo CD](docs/03-Access-Argo-CD.runme.md)
 
 ## CI/CD Architecture
 
