@@ -7,7 +7,7 @@ COPY *.go /app/
 RUN go build -o app
 
 # Container
-FROM debian:12.10-slim
+FROM debian:12.11-slim
 USER nobody
 WORKDIR /app
 COPY --from=builder /app/app .
