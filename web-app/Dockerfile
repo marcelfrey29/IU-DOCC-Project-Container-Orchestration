@@ -7,6 +7,6 @@ COPY . /app/
 RUN npm run build
 
 # Container
-FROM nginxinc/nginx-unprivileged:1.28.0-alpine-slim
+FROM nginxinc/nginx-unprivileged:1.29.0-alpine-slim
 COPY --from=builder /app/dist /usr/share/nginx/html
 USER nginx
